@@ -3,6 +3,7 @@
 ## High-level summary (one-liner)
 The server generates/loads an RSA keypair and listens for TCP connections; a client connects, establishes an ephemeral AES session (encrypted with the server RSA key and signed by the client), and both sides then exchange AES-CBC + HMAC-SHA256 protected JSON messages over a persistent TCP connection.
 
+![Program flow](./tis_project.png)
 ## Files in this project
 - `d:\secure_chat\server.py` — server implementation, RSA key persistence, handshake, per-connection session state, message receive loop.
 - `d:\secure_chat\client.py` — client implementation and Streamlit UI (keeps socket in session_state for persistent session).
