@@ -64,15 +64,6 @@ The server generates/loads an RSA keypair and listens for TCP connections; a cli
 - Uses RSA-PSS signatures for client authenticity.
 - Uses AES for bulk encryption and HMAC-SHA256 for integrity.
 
-## Important simplifications / limitations (do NOT use this as production TLS)
-- HMAC key reuse: AES session key is reused as the HMAC key; proper designs derive separate keys (HKDF).
-- No forward secrecy: session encrypted using server's long-term RSA key (no ephemeral DH/ECDHE).
-- Single IV reuse for the session: re-using the same IV for multiple AES-CBC messages is insecure.
-- No replay protection or per-message sequence numbers.
-- Ad-hoc framing: `\n\n` terminator is brittle for binary protocols.
-- No certificate validation / trust model: a MitM can substitute keys unless client has an out-of-band trust anchor.
-- No per-message nonce rotation; consider AEAD ciphers (AES-GCM/ChaCha20-Poly1305).
-
 ## Suggested improvements (practical next steps)
 - Use ephemeral ECDHE for forward secrecy.
 - Use HKDF to derive distinct encryption and MAC keys from a shared secret.
